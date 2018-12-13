@@ -1,0 +1,43 @@
+{% macro container(cont, isInit=False) %}
+  {% set icon = "fa-copyright" -%}
+  {% if isInit %} {% set icon = "fa-info-circle" %} {% endif -%}
+  {% set claz = "cont" -%}
+  {% if not cont.ready %} {% set claz = "cont-nr" %} {% endif -%}
+<tr>
+  <td class="{{claz}}"></td>
+  <td class="{{claz}}"><i class="fas {{icon}}"></i> {{cont.name}}</td>
+  <td class="{{claz}}">{{cont.state}}</td>
+  <td class="{{claz}}">{{cont.getLastTransition()}}</td>
+  <td class="{{claz}}">{{cont.restarts}}</td>
+  <td class="{{claz}}"></td>
+  <td class="{{claz}}"></td>
+</tr>
+{% endmacro %}
+
+
+{% macro containers(pod) %}
+  {% for c in pod.initConts -%}
+    {{ container(c, isInit=True) }}
+  {% endfor -%}
+  {% for c in pod.conts -%}
+    {{ container(c) }}
+  {% endfor -%}
+{% endmacro %}
+
+
+{% macro pod(pod, withContainers=True) %}
+  {% set claz = "pod" -%}
+  {% if not pod.ready %} {% set claz = "pod-nr" %} {% endif -%}
+<tr>
+  <td class="{{claz}}"><i class='fas fa-th-large'></i></td>
+  <td class="{{claz}}">{{pod.name}}</td>
+  <td class="{{claz}}">{{pod.getStatus()}}</td>
+  <td class="{{claz}}">{{pod.getLastTransition()}}</td>
+  <td class="{{claz}}">{{pod.getRestarts()}}</td>
+  <td class="{{claz}}">{{pod.ip}}</td>
+  <td class="{{claz}}">{{pod.node}}</td>
+</tr>
+  {% if withContainers %} {{ containers(pod) }} {% endif %}
+{% endmacro %}
+
+

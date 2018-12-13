@@ -1,0 +1,2024 @@
+{
+  "kind": "PodList",
+  "apiVersion": "v1",
+  "metadata": {
+    "selfLink": "/api/v1/namespaces/service/pods",
+    "resourceVersion": "158138"
+  },
+  "items": [
+    {
+      "metadata": {
+        "name": "app1",
+        "namespace": "service",
+        "selfLink": "/api/v1/namespaces/service/pods/app1",
+        "uid": "7e904529-f360-11e8-94c3-00505692bb16",
+        "resourceVersion": "6415",
+        "creationTimestamp": "2018-11-28T22:54:00Z",
+        "labels": {
+          "app": "cms-app"
+        }
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "pvc",
+            "persistentVolumeClaim": {
+              "claimName": "pvc-cms"
+            }
+          },
+          {
+            "name": "default-token-m7mx2",
+            "secret": {
+              "secretName": "default-token-m7mx2",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "main",
+            "image": "docker-registry-49-236:443/cms-app:latest",
+            "ports": [
+              {
+                "name": "http0",
+                "containerPort": 8443,
+                "protocol": "TCP"
+              },
+              {
+                "name": "http1",
+                "containerPort": 8080,
+                "protocol": "TCP"
+              },
+              {
+                "name": "http2",
+                "containerPort": 9393,
+                "protocol": "TCP"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "memory": "3Gi"
+              },
+              "requests": {
+                "memory": "3Gi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "pvc",
+                "mountPath": "/opt/tandbergtv/cms"
+              },
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "default",
+        "serviceAccount": "default",
+        "nodeName": "cars-mdt-1",
+        "securityContext": {},
+        "schedulerName": "default-scheduler"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:54:00Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:54:01Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:54:00Z"
+          }
+        ],
+        "hostIP": "10.116.55.237",
+        "podIP": "10.10.0.8",
+        "startTime": "2018-11-28T22:54:00Z",
+        "containerStatuses": [
+          {
+            "name": "main",
+            "state": {
+              "running": {
+                "startedAt": "2018-11-28T22:54:01Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "cms-app:latest",
+            "imageID": "docker-pullable://docker-registry-49-236:443/cms-app@sha256:56b61260b88ac46fb6014fe9eb3d7bc75ce3b2ab826028c08b7a74f4a58c8ef5",
+            "containerID": "docker://84db23a7588a3e30fdbd0e8c420e1b1e6ba7d2735a0f140c6f5aac5c62ecd47c"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "metadata": {
+        "name": "cms-rmq-0",
+        "generateName": "cms-rmq-",
+        "namespace": "service",
+        "selfLink": "/api/v1/namespaces/service/pods/cms-rmq-0",
+        "uid": "8ae81d62-f35b-11e8-94c3-00505692bb16",
+        "resourceVersion": "3625",
+        "creationTimestamp": "2018-11-28T22:18:33Z",
+        "labels": {
+          "app": "cms-rmq",
+          "controller-revision-hash": "cms-rmq-1880587994"
+        },
+        "annotations": {
+          "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"StatefulSet\",\"namespace\":\"service\",\"name\":\"cms-rmq\",\"uid\":\"8ae478f8-f35b-11e8-94c3-00505692bb16\",\"apiVersion\":\"apps/v1beta1\",\"resourceVersion\":\"3469\"}}\n",
+          "pod.alpha.kubernetes.io/init-container-statuses": "[{\"name\":\"install\",\"state\":{\"terminated\":{\"exitCode\":0,\"reason\":\"Completed\",\"startedAt\":\"2018-11-28T22:18:38Z\",\"finishedAt\":\"2018-11-28T22:18:38Z\",\"containerID\":\"docker://2a6966a8eb1f7a0224f0783b0246ee07c505a8888a759f24640d46600988c865\"}},\"lastState\":{},\"ready\":true,\"restartCount\":0,\"image\":\"docker-registry-49-236:443/cms-rmq-install:latest\",\"imageID\":\"docker-pullable://docker-registry-49-236:443/cms-rmq-install@sha256:b08d4a79e14d4aa7f5d5c2c9089e9a9f23f75072308b14b3f70fdc291084b409\",\"containerID\":\"docker://2a6966a8eb1f7a0224f0783b0246ee07c505a8888a759f24640d46600988c865\"}]",
+          "pod.alpha.kubernetes.io/init-containers": "[{\"name\":\"install\",\"image\":\"docker-registry-49-236:443/cms-rmq-install\",\"command\":[\"sh\",\"-c\",\"cp -r /opt/cms/cms-scripts /mnt\"],\"resources\":{},\"volumeMounts\":[{\"name\":\"pvc\",\"mountPath\":\"/mnt\"},{\"name\":\"default-token-m7mx2\",\"readOnly\":true,\"mountPath\":\"/var/run/secrets/kubernetes.io/serviceaccount\"}],\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}]",
+          "pod.beta.kubernetes.io/init-container-statuses": "[{\"name\":\"install\",\"state\":{\"terminated\":{\"exitCode\":0,\"reason\":\"Completed\",\"startedAt\":\"2018-11-28T22:18:38Z\",\"finishedAt\":\"2018-11-28T22:18:38Z\",\"containerID\":\"docker://2a6966a8eb1f7a0224f0783b0246ee07c505a8888a759f24640d46600988c865\"}},\"lastState\":{},\"ready\":true,\"restartCount\":0,\"image\":\"docker-registry-49-236:443/cms-rmq-install:latest\",\"imageID\":\"docker-pullable://docker-registry-49-236:443/cms-rmq-install@sha256:b08d4a79e14d4aa7f5d5c2c9089e9a9f23f75072308b14b3f70fdc291084b409\",\"containerID\":\"docker://2a6966a8eb1f7a0224f0783b0246ee07c505a8888a759f24640d46600988c865\"}]",
+          "pod.beta.kubernetes.io/init-containers": "[{\"name\":\"install\",\"image\":\"docker-registry-49-236:443/cms-rmq-install\",\"command\":[\"sh\",\"-c\",\"cp -r /opt/cms/cms-scripts /mnt\"],\"resources\":{},\"volumeMounts\":[{\"name\":\"pvc\",\"mountPath\":\"/mnt\"},{\"name\":\"default-token-m7mx2\",\"readOnly\":true,\"mountPath\":\"/var/run/secrets/kubernetes.io/serviceaccount\"}],\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}]"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1beta1",
+            "kind": "StatefulSet",
+            "name": "cms-rmq",
+            "uid": "8ae478f8-f35b-11e8-94c3-00505692bb16",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "pvc",
+            "persistentVolumeClaim": {
+              "claimName": "pvc-cms-rmq-0"
+            }
+          },
+          {
+            "name": "config-map",
+            "configMap": {
+              "name": "cms-rmq-config",
+              "items": [
+                {
+                  "key": "rabbitmq.conf",
+                  "path": "rabbitmq.conf"
+                },
+                {
+                  "key": "enabled_plugins",
+                  "path": "enabled_plugins"
+                }
+              ],
+              "defaultMode": 420
+            }
+          },
+          {
+            "name": "default-token-m7mx2",
+            "secret": {
+              "secretName": "default-token-m7mx2",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "initContainers": [
+          {
+            "name": "install",
+            "image": "docker-registry-49-236:443/cms-rmq-install",
+            "command": [
+              "sh",
+              "-c",
+              "cp -r /opt/cms/cms-scripts /mnt"
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "pvc",
+                "mountPath": "/mnt"
+              },
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "Always"
+          }
+        ],
+        "containers": [
+          {
+            "name": "rmq",
+            "image": "rabbitmq:3.7-management",
+            "ports": [
+              {
+                "name": "epmd",
+                "containerPort": 4369,
+                "protocol": "TCP"
+              },
+              {
+                "name": "amqp",
+                "containerPort": 5672,
+                "protocol": "TCP"
+              },
+              {
+                "name": "dist",
+                "containerPort": 25672,
+                "protocol": "TCP"
+              },
+              {
+                "name": "manager",
+                "containerPort": 15672,
+                "protocol": "TCP"
+              }
+            ],
+            "env": [
+              {
+                "name": "MY_POD_NAME",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.name"
+                  }
+                }
+              },
+              {
+                "name": "MY_POD_NAMESPACE",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.namespace"
+                  }
+                }
+              },
+              {
+                "name": "RABBITMQ_NODENAME",
+                "value": "rabbit@$(MY_POD_NAME).cms-rmq.$(MY_POD_NAMESPACE).svc.cluster.local"
+              },
+              {
+                "name": "RABBITMQ_USE_LONGNAME",
+                "value": "true"
+              },
+              {
+                "name": "RABBITMQ_ERLANG_COOKIE",
+                "value": "cms-rmq-1234"
+              }
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "pvc",
+                "mountPath": "/var/lib/rabbitmq"
+              },
+              {
+                "name": "config-map",
+                "mountPath": "/etc/rabbitmq"
+              },
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "lifecycle": {
+              "postStart": {
+                "exec": {
+                  "command": [
+                    "/var/lib/rabbitmq/cms-scripts/post_start.sh"
+                  ]
+                }
+              }
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "default",
+        "serviceAccount": "default",
+        "nodeName": "cars-mdt-3",
+        "securityContext": {},
+        "hostname": "cms-rmq-0",
+        "subdomain": "cms-rmq",
+        "schedulerName": "default-scheduler"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:18:38Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:19:44Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:18:33Z"
+          }
+        ],
+        "hostIP": "10.116.55.235",
+        "podIP": "10.10.2.7",
+        "startTime": "2018-11-28T22:18:33Z",
+        "initContainerStatuses": [
+          {
+            "name": "install",
+            "state": {
+              "terminated": {
+                "exitCode": 0,
+                "reason": "Completed",
+                "startedAt": "2018-11-28T22:18:38Z",
+                "finishedAt": "2018-11-28T22:18:38Z",
+                "containerID": "docker://2a6966a8eb1f7a0224f0783b0246ee07c505a8888a759f24640d46600988c865"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "docker-registry-49-236:443/cms-rmq-install:latest",
+            "imageID": "docker-pullable://docker-registry-49-236:443/cms-rmq-install@sha256:b08d4a79e14d4aa7f5d5c2c9089e9a9f23f75072308b14b3f70fdc291084b409",
+            "containerID": "docker://2a6966a8eb1f7a0224f0783b0246ee07c505a8888a759f24640d46600988c865"
+          }
+        ],
+        "containerStatuses": [
+          {
+            "name": "rmq",
+            "state": {
+              "running": {
+                "startedAt": "2018-11-28T22:19:03Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "rabbitmq:3.7-management",
+            "imageID": "docker-pullable://rabbitmq@sha256:3eb2fa0f83914999846f831f14b900c0c85cea8e5d2db48ff73cf7defa12fe96",
+            "containerID": "docker://3197897c2590376913e282db02a5290872d038e5413fbc5e08e1e663b473fc0e"
+          }
+        ],
+        "qosClass": "BestEffort"
+      }
+    },
+    {
+      "metadata": {
+        "name": "cms-rmq-1",
+        "generateName": "cms-rmq-",
+        "namespace": "service",
+        "selfLink": "/api/v1/namespaces/service/pods/cms-rmq-1",
+        "uid": "b578f2c0-f35b-11e8-94c3-00505692bb16",
+        "resourceVersion": "3926",
+        "creationTimestamp": "2018-11-28T22:19:44Z",
+        "labels": {
+          "app": "cms-rmq",
+          "controller-revision-hash": "cms-rmq-1880587994"
+        },
+        "annotations": {
+          "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"StatefulSet\",\"namespace\":\"service\",\"name\":\"cms-rmq\",\"uid\":\"8ae478f8-f35b-11e8-94c3-00505692bb16\",\"apiVersion\":\"apps/v1beta1\",\"resourceVersion\":\"3473\"}}\n",
+          "pod.alpha.kubernetes.io/init-container-statuses": "[{\"name\":\"install\",\"state\":{\"terminated\":{\"exitCode\":0,\"reason\":\"Completed\",\"startedAt\":\"2018-11-28T22:19:46Z\",\"finishedAt\":\"2018-11-28T22:19:46Z\",\"containerID\":\"docker://1e6b2f0258fbac2099b3b837f2a1d568e94655bac82b904262f279cb6a1ee220\"}},\"lastState\":{},\"ready\":true,\"restartCount\":0,\"image\":\"docker-registry-49-236:443/cms-rmq-install:latest\",\"imageID\":\"docker-pullable://docker-registry-49-236:443/cms-rmq-install@sha256:b08d4a79e14d4aa7f5d5c2c9089e9a9f23f75072308b14b3f70fdc291084b409\",\"containerID\":\"docker://1e6b2f0258fbac2099b3b837f2a1d568e94655bac82b904262f279cb6a1ee220\"}]",
+          "pod.alpha.kubernetes.io/init-containers": "[{\"name\":\"install\",\"image\":\"docker-registry-49-236:443/cms-rmq-install\",\"command\":[\"sh\",\"-c\",\"cp -r /opt/cms/cms-scripts /mnt\"],\"resources\":{},\"volumeMounts\":[{\"name\":\"pvc\",\"mountPath\":\"/mnt\"},{\"name\":\"default-token-m7mx2\",\"readOnly\":true,\"mountPath\":\"/var/run/secrets/kubernetes.io/serviceaccount\"}],\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}]",
+          "pod.beta.kubernetes.io/init-container-statuses": "[{\"name\":\"install\",\"state\":{\"terminated\":{\"exitCode\":0,\"reason\":\"Completed\",\"startedAt\":\"2018-11-28T22:19:46Z\",\"finishedAt\":\"2018-11-28T22:19:46Z\",\"containerID\":\"docker://1e6b2f0258fbac2099b3b837f2a1d568e94655bac82b904262f279cb6a1ee220\"}},\"lastState\":{},\"ready\":true,\"restartCount\":0,\"image\":\"docker-registry-49-236:443/cms-rmq-install:latest\",\"imageID\":\"docker-pullable://docker-registry-49-236:443/cms-rmq-install@sha256:b08d4a79e14d4aa7f5d5c2c9089e9a9f23f75072308b14b3f70fdc291084b409\",\"containerID\":\"docker://1e6b2f0258fbac2099b3b837f2a1d568e94655bac82b904262f279cb6a1ee220\"}]",
+          "pod.beta.kubernetes.io/init-containers": "[{\"name\":\"install\",\"image\":\"docker-registry-49-236:443/cms-rmq-install\",\"command\":[\"sh\",\"-c\",\"cp -r /opt/cms/cms-scripts /mnt\"],\"resources\":{},\"volumeMounts\":[{\"name\":\"pvc\",\"mountPath\":\"/mnt\"},{\"name\":\"default-token-m7mx2\",\"readOnly\":true,\"mountPath\":\"/var/run/secrets/kubernetes.io/serviceaccount\"}],\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}]"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1beta1",
+            "kind": "StatefulSet",
+            "name": "cms-rmq",
+            "uid": "8ae478f8-f35b-11e8-94c3-00505692bb16",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "pvc",
+            "persistentVolumeClaim": {
+              "claimName": "pvc-cms-rmq-1"
+            }
+          },
+          {
+            "name": "config-map",
+            "configMap": {
+              "name": "cms-rmq-config",
+              "items": [
+                {
+                  "key": "rabbitmq.conf",
+                  "path": "rabbitmq.conf"
+                },
+                {
+                  "key": "enabled_plugins",
+                  "path": "enabled_plugins"
+                }
+              ],
+              "defaultMode": 420
+            }
+          },
+          {
+            "name": "default-token-m7mx2",
+            "secret": {
+              "secretName": "default-token-m7mx2",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "initContainers": [
+          {
+            "name": "install",
+            "image": "docker-registry-49-236:443/cms-rmq-install",
+            "command": [
+              "sh",
+              "-c",
+              "cp -r /opt/cms/cms-scripts /mnt"
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "pvc",
+                "mountPath": "/mnt"
+              },
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "Always"
+          }
+        ],
+        "containers": [
+          {
+            "name": "rmq",
+            "image": "rabbitmq:3.7-management",
+            "ports": [
+              {
+                "name": "epmd",
+                "containerPort": 4369,
+                "protocol": "TCP"
+              },
+              {
+                "name": "amqp",
+                "containerPort": 5672,
+                "protocol": "TCP"
+              },
+              {
+                "name": "dist",
+                "containerPort": 25672,
+                "protocol": "TCP"
+              },
+              {
+                "name": "manager",
+                "containerPort": 15672,
+                "protocol": "TCP"
+              }
+            ],
+            "env": [
+              {
+                "name": "MY_POD_NAME",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.name"
+                  }
+                }
+              },
+              {
+                "name": "MY_POD_NAMESPACE",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.namespace"
+                  }
+                }
+              },
+              {
+                "name": "RABBITMQ_NODENAME",
+                "value": "rabbit@$(MY_POD_NAME).cms-rmq.$(MY_POD_NAMESPACE).svc.cluster.local"
+              },
+              {
+                "name": "RABBITMQ_USE_LONGNAME",
+                "value": "true"
+              },
+              {
+                "name": "RABBITMQ_ERLANG_COOKIE",
+                "value": "cms-rmq-1234"
+              }
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "pvc",
+                "mountPath": "/var/lib/rabbitmq"
+              },
+              {
+                "name": "config-map",
+                "mountPath": "/etc/rabbitmq"
+              },
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "lifecycle": {
+              "postStart": {
+                "exec": {
+                  "command": [
+                    "/var/lib/rabbitmq/cms-scripts/post_start.sh"
+                  ]
+                }
+              }
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "default",
+        "serviceAccount": "default",
+        "nodeName": "cars-mdt-1",
+        "securityContext": {},
+        "hostname": "cms-rmq-1",
+        "subdomain": "cms-rmq",
+        "schedulerName": "default-scheduler"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:19:47Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:22:51Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:19:44Z"
+          }
+        ],
+        "hostIP": "10.116.55.237",
+        "podIP": "10.10.0.5",
+        "startTime": "2018-11-28T22:19:44Z",
+        "initContainerStatuses": [
+          {
+            "name": "install",
+            "state": {
+              "terminated": {
+                "exitCode": 0,
+                "reason": "Completed",
+                "startedAt": "2018-11-28T22:19:46Z",
+                "finishedAt": "2018-11-28T22:19:46Z",
+                "containerID": "docker://1e6b2f0258fbac2099b3b837f2a1d568e94655bac82b904262f279cb6a1ee220"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "docker-registry-49-236:443/cms-rmq-install:latest",
+            "imageID": "docker-pullable://docker-registry-49-236:443/cms-rmq-install@sha256:b08d4a79e14d4aa7f5d5c2c9089e9a9f23f75072308b14b3f70fdc291084b409",
+            "containerID": "docker://1e6b2f0258fbac2099b3b837f2a1d568e94655bac82b904262f279cb6a1ee220"
+          }
+        ],
+        "containerStatuses": [
+          {
+            "name": "rmq",
+            "state": {
+              "running": {
+                "startedAt": "2018-11-28T22:20:30Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "rabbitmq:3.7-management",
+            "imageID": "docker-pullable://rabbitmq@sha256:3eb2fa0f83914999846f831f14b900c0c85cea8e5d2db48ff73cf7defa12fe96",
+            "containerID": "docker://7a0d8e4a8e4ad701f7e8c6cdac2a7f4e7a0c28671882f94d23416a4d908a3116"
+          }
+        ],
+        "qosClass": "BestEffort"
+      }
+    },
+    {
+      "metadata": {
+        "name": "cs1",
+        "namespace": "service",
+        "selfLink": "/api/v1/namespaces/service/pods/cs1",
+        "uid": "7d90a311-f360-11e8-94c3-00505692bb16",
+        "resourceVersion": "6383",
+        "creationTimestamp": "2018-11-28T22:53:58Z",
+        "labels": {
+          "app": "cms-cs"
+        }
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "default-token-m7mx2",
+            "secret": {
+              "secretName": "default-token-m7mx2",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "main",
+            "image": "docker-registry-49-236:443/cms-cs:latest",
+            "ports": [
+              {
+                "name": "http0",
+                "containerPort": 8501,
+                "protocol": "TCP"
+              },
+              {
+                "name": "http1",
+                "containerPort": 8443,
+                "protocol": "TCP"
+              },
+              {
+                "name": "http2",
+                "containerPort": 9090,
+                "protocol": "TCP"
+              },
+              {
+                "name": "http3",
+                "containerPort": 7443,
+                "protocol": "TCP"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "memory": "3Gi"
+              },
+              "requests": {
+                "memory": "3Gi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "default",
+        "serviceAccount": "default",
+        "nodeName": "cars-mdt-1",
+        "securityContext": {},
+        "schedulerName": "default-scheduler"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:53:58Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:53:59Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:53:58Z"
+          }
+        ],
+        "hostIP": "10.116.55.237",
+        "podIP": "10.10.0.7",
+        "startTime": "2018-11-28T22:53:58Z",
+        "containerStatuses": [
+          {
+            "name": "main",
+            "state": {
+              "running": {
+                "startedAt": "2018-11-28T22:53:59Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "cms-cs:latest",
+            "imageID": "docker-pullable://docker-registry-49-236:443/cms-cs@sha256:394bd57a0f3b8c5f21102fbbb724dc6d0db595e3a90ef42a393faaca8dfbc44c",
+            "containerID": "docker://a92d6af2e8992513c4fd85b81ebe1237a69609b9026b9724dc60f97763457536"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "metadata": {
+        "name": "ct",
+        "namespace": "service",
+        "selfLink": "/api/v1/namespaces/service/pods/ct",
+        "uid": "7f8befad-f360-11e8-94c3-00505692bb16",
+        "resourceVersion": "6830",
+        "creationTimestamp": "2018-11-28T22:54:01Z",
+        "labels": {
+          "app": "cms-ct"
+        }
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "default-token-m7mx2",
+            "secret": {
+              "secretName": "default-token-m7mx2",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "main",
+            "image": "docker-registry-49-236:443/cms-ct:latest",
+            "ports": [
+              {
+                "name": "http0",
+                "containerPort": 8081,
+                "protocol": "TCP"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "memory": "1Gi"
+              },
+              "requests": {
+                "memory": "1Gi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "default",
+        "serviceAccount": "default",
+        "nodeName": "cars-mdt-3",
+        "securityContext": {},
+        "schedulerName": "default-scheduler"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:54:01Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:57:57Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:54:01Z"
+          }
+        ],
+        "hostIP": "10.116.55.235",
+        "podIP": "10.10.2.11",
+        "startTime": "2018-11-28T22:54:01Z",
+        "containerStatuses": [
+          {
+            "name": "main",
+            "state": {
+              "running": {
+                "startedAt": "2018-11-28T22:57:57Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "docker-registry-49-236:443/cms-ct:latest",
+            "imageID": "docker-pullable://docker-registry-49-236:443/cms-ct@sha256:521ff146bf02dfbf6e7e44af0fa68897bd89e5895626014508e35a89572fa86d",
+            "containerID": "docker://82fb3926b613ee3bf989967650c7b53e19de73e905f32508f10cae74a1b53422"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "metadata": {
+        "name": "db1",
+        "namespace": "service",
+        "selfLink": "/api/v1/namespaces/service/pods/db1",
+        "uid": "7de68d5c-f360-11e8-94c3-00505692bb16",
+        "resourceVersion": "6567",
+        "creationTimestamp": "2018-11-28T22:53:58Z",
+        "labels": {
+          "app": "cms-db"
+        }
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "default-token-m7mx2",
+            "secret": {
+              "secretName": "default-token-m7mx2",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "main",
+            "image": "docker-registry-49-236:443/cms-db:latest",
+            "ports": [
+              {
+                "name": "http0",
+                "containerPort": 5432,
+                "protocol": "TCP"
+              },
+              {
+                "name": "http1",
+                "containerPort": 25432,
+                "protocol": "TCP"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "memory": "3Gi"
+              },
+              "requests": {
+                "memory": "3Gi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "default",
+        "serviceAccount": "default",
+        "nodeName": "cars-mdt-2",
+        "securityContext": {},
+        "schedulerName": "default-scheduler"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:53:58Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:55:25Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:53:58Z"
+          }
+        ],
+        "hostIP": "10.116.55.234",
+        "podIP": "10.10.1.11",
+        "startTime": "2018-11-28T22:53:58Z",
+        "containerStatuses": [
+          {
+            "name": "main",
+            "state": {
+              "running": {
+                "startedAt": "2018-11-28T22:55:24Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "docker-registry-49-236:443/cms-db:latest",
+            "imageID": "docker-pullable://docker-registry-49-236:443/cms-db@sha256:83e7c42a80a2f7ca55d7de8533693c0700682629f90df99710ce1139f3e6c7cf",
+            "containerID": "docker://c870f38dfe0ff91d6751078f2016137d8e4e17c13b0f286efd95294a7ddfff51"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "metadata": {
+        "name": "es1",
+        "namespace": "service",
+        "selfLink": "/api/v1/namespaces/service/pods/es1",
+        "uid": "7e44a0bf-f360-11e8-94c3-00505692bb16",
+        "resourceVersion": "6574",
+        "creationTimestamp": "2018-11-28T22:53:59Z",
+        "labels": {
+          "app": "cms-es"
+        }
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "default-token-m7mx2",
+            "secret": {
+              "secretName": "default-token-m7mx2",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "main",
+            "image": "docker-registry-49-236:443/cms-es:latest",
+            "ports": [
+              {
+                "name": "http0",
+                "containerPort": 9200,
+                "protocol": "TCP"
+              },
+              {
+                "name": "http1",
+                "containerPort": 9300,
+                "protocol": "TCP"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "memory": "3Gi"
+              },
+              "requests": {
+                "memory": "3Gi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "default",
+        "serviceAccount": "default",
+        "nodeName": "cars-mdt-3",
+        "securityContext": {},
+        "schedulerName": "default-scheduler"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:53:59Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:55:26Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:53:59Z"
+          }
+        ],
+        "hostIP": "10.116.55.235",
+        "podIP": "10.10.2.9",
+        "startTime": "2018-11-28T22:53:59Z",
+        "containerStatuses": [
+          {
+            "name": "main",
+            "state": {
+              "running": {
+                "startedAt": "2018-11-28T22:55:26Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "docker-registry-49-236:443/cms-es:latest",
+            "imageID": "docker-pullable://docker-registry-49-236:443/cms-es@sha256:3d8918b67a96e362853ba933a753055cddd59c00c0b6d92405a2c3adabcc1b2b",
+            "containerID": "docker://046fb6ccf22afa28d34405dfab2a240dd6feca911e7ee77b610b1b33df46b774"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "metadata": {
+        "name": "haproxy-dep-3519193734-6bmrs",
+        "generateName": "haproxy-dep-3519193734-",
+        "namespace": "service",
+        "selfLink": "/api/v1/namespaces/service/pods/haproxy-dep-3519193734-6bmrs",
+        "uid": "7c79237e-f360-11e8-b2da-00505692814c",
+        "resourceVersion": "6430",
+        "creationTimestamp": "2018-11-28T22:53:56Z",
+        "labels": {
+          "app": "haproxy",
+          "pod-template-hash": "3519193734"
+        },
+        "annotations": {
+          "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"ReplicaSet\",\"namespace\":\"service\",\"name\":\"haproxy-dep-3519193734\",\"uid\":\"7c73bc70-f360-11e8-b2da-00505692814c\",\"apiVersion\":\"extensions\",\"resourceVersion\":\"6324\"}}\n"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "extensions/v1beta1",
+            "kind": "ReplicaSet",
+            "name": "haproxy-dep-3519193734",
+            "uid": "7c73bc70-f360-11e8-b2da-00505692814c",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "kube-template-tmpl",
+            "configMap": {
+              "name": "haproxy-template",
+              "items": [
+                {
+                  "key": "haproxy.tmpl",
+                  "path": "haproxy.tmpl"
+                }
+              ],
+              "defaultMode": 420
+            }
+          },
+          {
+            "name": "default-token-m7mx2",
+            "secret": {
+              "secretName": "default-token-m7mx2",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "main",
+            "image": "docker-registry-49-236:443/cms-haproxy:0.6",
+            "command": [
+              "/main.sh"
+            ],
+            "resources": {
+              "limits": {
+                "memory": "1Gi"
+              },
+              "requests": {
+                "memory": "1Gi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "kube-template-tmpl",
+                "mountPath": "/opt/kube-template/tmpl"
+              },
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "default",
+        "serviceAccount": "default",
+        "nodeName": "cars-mdt-3",
+        "securityContext": {},
+        "schedulerName": "default-scheduler"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:53:56Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:54:04Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:53:56Z"
+          }
+        ],
+        "hostIP": "10.116.55.235",
+        "podIP": "10.10.2.8",
+        "startTime": "2018-11-28T22:53:56Z",
+        "containerStatuses": [
+          {
+            "name": "main",
+            "state": {
+              "running": {
+                "startedAt": "2018-11-28T22:54:04Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "docker-registry-49-236:443/cms-haproxy:0.6",
+            "imageID": "docker-pullable://docker-registry-49-236:443/cms-haproxy@sha256:68742384712f3b38886ec3ce6633f94846a6252767b713e82ebb61941160b408",
+            "containerID": "docker://9fe04e355faba57cdd9f326c81cd34224a36efbf7fb98e33ca2440edf4e99253"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "metadata": {
+        "name": "init",
+        "namespace": "service",
+        "selfLink": "/api/v1/namespaces/service/pods/init",
+        "uid": "7d495908-f360-11e8-94c3-00505692bb16",
+        "resourceVersion": "157908",
+        "creationTimestamp": "2018-11-28T22:53:57Z",
+        "labels": {
+          "app": "cms-init"
+        },
+        "annotations": {
+          "pod.alpha.kubernetes.io/init-container-statuses": "[{\"name\":\"install\",\"state\":{\"terminated\":{\"exitCode\":0,\"reason\":\"Completed\",\"startedAt\":\"2018-11-28T23:15:05Z\",\"finishedAt\":\"2018-11-28T23:15:36Z\",\"containerID\":\"docker://4dfcbf082b2b725eb0c4eb8f0741073b788927de24ce956612a39bb8d5c3994b\"}},\"lastState\":{},\"ready\":true,\"restartCount\":3,\"image\":\"cms-init:latest\",\"imageID\":\"docker-pullable://docker-registry-49-236:443/cms-init@sha256:9e63435347a340093efe2b4bfcf86b0e592fa572b9b13496f26fc50402a2272b\",\"containerID\":\"docker://4dfcbf082b2b725eb0c4eb8f0741073b788927de24ce956612a39bb8d5c3994b\"}]",
+          "pod.alpha.kubernetes.io/init-containers": "[{\"name\":\"install\",\"image\":\"docker-registry-49-236:443/cms-init:latest\",\"command\":[\"sh\",\"-c\",\"/bin/bash /root/run-init.sh\"],\"resources\":{},\"volumeMounts\":[{\"name\":\"pvc\",\"mountPath\":\"/mnt\"},{\"name\":\"default-token-m7mx2\",\"readOnly\":true,\"mountPath\":\"/var/run/secrets/kubernetes.io/serviceaccount\"}],\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}]",
+          "pod.beta.kubernetes.io/init-container-statuses": "[{\"name\":\"install\",\"state\":{\"terminated\":{\"exitCode\":0,\"reason\":\"Completed\",\"startedAt\":\"2018-11-28T23:15:05Z\",\"finishedAt\":\"2018-11-28T23:15:36Z\",\"containerID\":\"docker://4dfcbf082b2b725eb0c4eb8f0741073b788927de24ce956612a39bb8d5c3994b\"}},\"lastState\":{},\"ready\":true,\"restartCount\":3,\"image\":\"cms-init:latest\",\"imageID\":\"docker-pullable://docker-registry-49-236:443/cms-init@sha256:9e63435347a340093efe2b4bfcf86b0e592fa572b9b13496f26fc50402a2272b\",\"containerID\":\"docker://4dfcbf082b2b725eb0c4eb8f0741073b788927de24ce956612a39bb8d5c3994b\"}]",
+          "pod.beta.kubernetes.io/init-containers": "[{\"name\":\"install\",\"image\":\"docker-registry-49-236:443/cms-init:latest\",\"command\":[\"sh\",\"-c\",\"/bin/bash /root/run-init.sh\"],\"resources\":{},\"volumeMounts\":[{\"name\":\"pvc\",\"mountPath\":\"/mnt\"},{\"name\":\"default-token-m7mx2\",\"readOnly\":true,\"mountPath\":\"/var/run/secrets/kubernetes.io/serviceaccount\"}],\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}]"
+        }
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "pvc",
+            "persistentVolumeClaim": {
+              "claimName": "pvc-cms"
+            }
+          },
+          {
+            "name": "default-token-m7mx2",
+            "secret": {
+              "secretName": "default-token-m7mx2",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "initContainers": [
+          {
+            "name": "install",
+            "image": "docker-registry-49-236:443/cms-init:latest",
+            "command": [
+              "sh",
+              "-c",
+              "/bin/bash /root/run-init.sh"
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "pvc",
+                "mountPath": "/mnt"
+              },
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "Always"
+          }
+        ],
+        "containers": [
+          {
+            "name": "main",
+            "image": "busybox",
+            "command": [
+              "sh",
+              "-c",
+              "echo Completed share setup; sleep"
+            ],
+            "resources": {
+              "limits": {
+                "memory": "50Mi"
+              },
+              "requests": {
+                "memory": "50Mi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "default",
+        "serviceAccount": "default",
+        "nodeName": "cars-mdt-1",
+        "securityContext": {},
+        "schedulerName": "default-scheduler"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T23:15:37Z"
+          },
+          {
+            "type": "Ready",
+            "status": "False",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-29T18:44:04Z",
+            "reason": "ContainersNotReady",
+            "message": "containers with unready status: [main]"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:53:57Z"
+          }
+        ],
+        "hostIP": "10.116.55.237",
+        "podIP": "10.10.0.6",
+        "startTime": "2018-11-28T22:53:57Z",
+        "initContainerStatuses": [
+          {
+            "name": "install",
+            "state": {
+              "terminated": {
+                "exitCode": 0,
+                "reason": "Completed",
+                "startedAt": "2018-11-28T23:15:05Z",
+                "finishedAt": "2018-11-28T23:15:36Z",
+                "containerID": "docker://4dfcbf082b2b725eb0c4eb8f0741073b788927de24ce956612a39bb8d5c3994b"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 3,
+            "image": "cms-init:latest",
+            "imageID": "docker-pullable://docker-registry-49-236:443/cms-init@sha256:9e63435347a340093efe2b4bfcf86b0e592fa572b9b13496f26fc50402a2272b",
+            "containerID": "docker://4dfcbf082b2b725eb0c4eb8f0741073b788927de24ce956612a39bb8d5c3994b"
+          }
+        ],
+        "containerStatuses": [
+          {
+            "name": "main",
+            "state": {
+              "waiting": {
+                "reason": "CrashLoopBackOff",
+                "message": "Back-off 5m0s restarting failed container=main pod=init_service(7d495908-f360-11e8-94c3-00505692bb16)"
+              }
+            },
+            "lastState": {
+              "terminated": {
+                "exitCode": 1,
+                "reason": "Error",
+                "startedAt": "2018-11-29T23:10:16Z",
+                "finishedAt": "2018-11-29T23:10:16Z",
+                "containerID": "docker://bae9f4fcdd416d2622207976a790366ede193a2dfde5010e4e520e3a9dfbe217"
+              }
+            },
+            "ready": false,
+            "restartCount": 285,
+            "image": "busybox:latest",
+            "imageID": "docker-pullable://busybox@sha256:2a03a6059f21e150ae84b0973863609494aad70f0a80eaeb64bddd8d92465812",
+            "containerID": "docker://bae9f4fcdd416d2622207976a790366ede193a2dfde5010e4e520e3a9dfbe217"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "metadata": {
+        "name": "pt1",
+        "namespace": "service",
+        "selfLink": "/api/v1/namespaces/service/pods/pt1",
+        "uid": "7eea0f45-f360-11e8-94c3-00505692bb16",
+        "resourceVersion": "6675",
+        "creationTimestamp": "2018-11-28T22:54:00Z",
+        "labels": {
+          "app": "cms-pt"
+        }
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "default-token-m7mx2",
+            "secret": {
+              "secretName": "default-token-m7mx2",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "main",
+            "image": "docker-registry-49-236:443/cms-pt:latest",
+            "ports": [
+              {
+                "name": "http0",
+                "containerPort": 16443,
+                "protocol": "TCP"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "memory": "2Gi"
+              },
+              "requests": {
+                "memory": "2Gi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "default",
+        "serviceAccount": "default",
+        "nodeName": "cars-mdt-3",
+        "securityContext": {},
+        "schedulerName": "default-scheduler"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:54:00Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:56:21Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:54:00Z"
+          }
+        ],
+        "hostIP": "10.116.55.235",
+        "podIP": "10.10.2.10",
+        "startTime": "2018-11-28T22:54:00Z",
+        "containerStatuses": [
+          {
+            "name": "main",
+            "state": {
+              "running": {
+                "startedAt": "2018-11-28T22:56:21Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "docker-registry-49-236:443/cms-pt:latest",
+            "imageID": "docker-pullable://docker-registry-49-236:443/cms-pt@sha256:5042ea3e9a66a4e662f35e03bac108e90e14cf27ce1c5ccc67b613a97e4964bf",
+            "containerID": "docker://69ebd332192f36415c638a1e13811953fcbe52aacbd4741a62ffd6a35cedd828"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "metadata": {
+        "name": "wfs-deployment-1274442441-frp6h",
+        "generateName": "wfs-deployment-1274442441-",
+        "namespace": "service",
+        "selfLink": "/api/v1/namespaces/service/pods/wfs-deployment-1274442441-frp6h",
+        "uid": "33100325-f361-11e8-b2da-00505692814c",
+        "resourceVersion": "10564",
+        "creationTimestamp": "2018-11-28T22:59:02Z",
+        "labels": {
+          "app": "cms-wfs",
+          "pod-template-hash": "1274442441"
+        },
+        "annotations": {
+          "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"ReplicaSet\",\"namespace\":\"service\",\"name\":\"wfs-deployment-1274442441\",\"uid\":\"330963b8-f361-11e8-b2da-00505692814c\",\"apiVersion\":\"extensions\",\"resourceVersion\":\"6940\"}}\n"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "extensions/v1beta1",
+            "kind": "ReplicaSet",
+            "name": "wfs-deployment-1274442441",
+            "uid": "330963b8-f361-11e8-b2da-00505692814c",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "pvc",
+            "persistentVolumeClaim": {
+              "claimName": "pvc-cms"
+            }
+          },
+          {
+            "name": "shared-data",
+            "emptyDir": {
+              "sizeLimit": "0"
+            }
+          },
+          {
+            "name": "config-map",
+            "configMap": {
+              "name": "logstash-main-pipeline",
+              "items": [
+                {
+                  "key": "cms.conf",
+                  "path": "cms.conf"
+                }
+              ],
+              "defaultMode": 420
+            }
+          },
+          {
+            "name": "default-token-m7mx2",
+            "secret": {
+              "secretName": "default-token-m7mx2",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "logstash",
+            "image": "docker.elastic.co/logstash/logstash-oss:6.4.0",
+            "resources": {
+              "limits": {
+                "memory": "2Gi"
+              },
+              "requests": {
+                "memory": "2Gi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "shared-data",
+                "mountPath": "/mnt"
+              },
+              {
+                "name": "config-map",
+                "mountPath": "/usr/share/logstash/pipeline"
+              },
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          },
+          {
+            "name": "cms-wfs",
+            "image": "docker-registry-49-236:443/cms-wfs:latest",
+            "ports": [
+              {
+                "name": "http0",
+                "containerPort": 7070,
+                "protocol": "TCP"
+              },
+              {
+                "name": "http1",
+                "containerPort": 7443,
+                "protocol": "TCP"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "memory": "2Gi"
+              },
+              "requests": {
+                "memory": "2Gi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "pvc",
+                "mountPath": "/opt/tandbergtv/cms"
+              },
+              {
+                "name": "shared-data",
+                "mountPath": "/opt/tandbergtv/log"
+              },
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "default",
+        "serviceAccount": "default",
+        "nodeName": "cars-mdt-2",
+        "securityContext": {},
+        "schedulerName": "default-scheduler"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:59:02Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T23:27:45Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:59:02Z"
+          }
+        ],
+        "hostIP": "10.116.55.234",
+        "podIP": "10.10.1.13",
+        "startTime": "2018-11-28T22:59:02Z",
+        "containerStatuses": [
+          {
+            "name": "cms-wfs",
+            "state": {
+              "running": {
+                "startedAt": "2018-11-28T23:27:44Z"
+              }
+            },
+            "lastState": {
+              "terminated": {
+                "exitCode": 137,
+                "reason": "Error",
+                "startedAt": "2018-11-28T23:26:39Z",
+                "finishedAt": "2018-11-28T23:27:27Z",
+                "containerID": "docker://b021b4d17943de72845abd03ffc136186856583e2ec7bf47159589e59756976e"
+              }
+            },
+            "ready": true,
+            "restartCount": 2,
+            "image": "docker-registry-49-236:443/cms-wfs:latest",
+            "imageID": "docker-pullable://docker-registry-49-236:443/cms-wfs@sha256:16e415ad9d9ba799eba4f5457a56c6bc739c316e654f526a085ec78df1ee2dcf",
+            "containerID": "docker://12f3f180200576707f29ffbcd064f23dc98e658c3567963f09cc7af0e9ee9938"
+          },
+          {
+            "name": "logstash",
+            "state": {
+              "running": {
+                "startedAt": "2018-11-28T23:00:26Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "docker.elastic.co/logstash/logstash-oss:6.4.0",
+            "imageID": "docker-pullable://docker.elastic.co/logstash/logstash-oss@sha256:2d61f15ebe2f0701221be9c671a474cc35d80de243da843ce875027364e36094",
+            "containerID": "docker://969f73806b99a041378778eb9c87f65af8121e13355eb957a3993d1e2e868961"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "metadata": {
+        "name": "wfs-deployment-1274442441-j1qxh",
+        "generateName": "wfs-deployment-1274442441-",
+        "namespace": "service",
+        "selfLink": "/api/v1/namespaces/service/pods/wfs-deployment-1274442441-j1qxh",
+        "uid": "33103d8b-f361-11e8-b2da-00505692814c",
+        "resourceVersion": "7184",
+        "creationTimestamp": "2018-11-28T22:59:02Z",
+        "labels": {
+          "app": "cms-wfs",
+          "pod-template-hash": "1274442441"
+        },
+        "annotations": {
+          "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"ReplicaSet\",\"namespace\":\"service\",\"name\":\"wfs-deployment-1274442441\",\"uid\":\"330963b8-f361-11e8-b2da-00505692814c\",\"apiVersion\":\"extensions\",\"resourceVersion\":\"6940\"}}\n"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "extensions/v1beta1",
+            "kind": "ReplicaSet",
+            "name": "wfs-deployment-1274442441",
+            "uid": "330963b8-f361-11e8-b2da-00505692814c",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "pvc",
+            "persistentVolumeClaim": {
+              "claimName": "pvc-cms"
+            }
+          },
+          {
+            "name": "shared-data",
+            "emptyDir": {
+              "sizeLimit": "0"
+            }
+          },
+          {
+            "name": "config-map",
+            "configMap": {
+              "name": "logstash-main-pipeline",
+              "items": [
+                {
+                  "key": "cms.conf",
+                  "path": "cms.conf"
+                }
+              ],
+              "defaultMode": 420
+            }
+          },
+          {
+            "name": "default-token-m7mx2",
+            "secret": {
+              "secretName": "default-token-m7mx2",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "logstash",
+            "image": "docker.elastic.co/logstash/logstash-oss:6.4.0",
+            "resources": {
+              "limits": {
+                "memory": "2Gi"
+              },
+              "requests": {
+                "memory": "2Gi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "shared-data",
+                "mountPath": "/mnt"
+              },
+              {
+                "name": "config-map",
+                "mountPath": "/usr/share/logstash/pipeline"
+              },
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          },
+          {
+            "name": "cms-wfs",
+            "image": "docker-registry-49-236:443/cms-wfs:latest",
+            "ports": [
+              {
+                "name": "http0",
+                "containerPort": 7070,
+                "protocol": "TCP"
+              },
+              {
+                "name": "http1",
+                "containerPort": 7443,
+                "protocol": "TCP"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "memory": "2Gi"
+              },
+              "requests": {
+                "memory": "2Gi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "pvc",
+                "mountPath": "/opt/tandbergtv/cms"
+              },
+              {
+                "name": "shared-data",
+                "mountPath": "/opt/tandbergtv/log"
+              },
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "default",
+        "serviceAccount": "default",
+        "nodeName": "cars-mdt-1",
+        "securityContext": {},
+        "schedulerName": "default-scheduler"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:59:02Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T23:01:10Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:59:02Z"
+          }
+        ],
+        "hostIP": "10.116.55.237",
+        "podIP": "10.10.0.9",
+        "startTime": "2018-11-28T22:59:02Z",
+        "containerStatuses": [
+          {
+            "name": "cms-wfs",
+            "state": {
+              "running": {
+                "startedAt": "2018-11-28T23:01:09Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "cms-wfs:latest",
+            "imageID": "docker-pullable://docker-registry-49-236:443/cms-wfs@sha256:16e415ad9d9ba799eba4f5457a56c6bc739c316e654f526a085ec78df1ee2dcf",
+            "containerID": "docker://08d208e82721aa27f8d38a4e071fa976a15eb2d2319f3211ef0b8d5ecd8d0f39"
+          },
+          {
+            "name": "logstash",
+            "state": {
+              "running": {
+                "startedAt": "2018-11-28T23:01:09Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "docker.elastic.co/logstash/logstash-oss:6.4.0",
+            "imageID": "docker-pullable://docker.elastic.co/logstash/logstash-oss@sha256:2d61f15ebe2f0701221be9c671a474cc35d80de243da843ce875027364e36094",
+            "containerID": "docker://241dbfeaa867694b7cb71fb6115f6062f68f474eaf26cb68ea612602eb435c5e"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "metadata": {
+        "name": "xport",
+        "namespace": "service",
+        "selfLink": "/api/v1/namespaces/service/pods/xport",
+        "uid": "7f3765a5-f360-11e8-94c3-00505692bb16",
+        "resourceVersion": "6653",
+        "creationTimestamp": "2018-11-28T22:54:01Z",
+        "labels": {
+          "app": "cms-xport"
+        }
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "default-token-m7mx2",
+            "secret": {
+              "secretName": "default-token-m7mx2",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "main",
+            "image": "docker-registry-49-236:443/cms-xport:latest",
+            "ports": [
+              {
+                "name": "http0",
+                "containerPort": 8601,
+                "protocol": "TCP"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "memory": "1Gi"
+              },
+              "requests": {
+                "memory": "1Gi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "default-token-m7mx2",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "default",
+        "serviceAccount": "default",
+        "nodeName": "cars-mdt-2",
+        "securityContext": {},
+        "schedulerName": "default-scheduler"
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:54:01Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:56:10Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2018-11-28T22:54:01Z"
+          }
+        ],
+        "hostIP": "10.116.55.234",
+        "podIP": "10.10.1.12",
+        "startTime": "2018-11-28T22:54:01Z",
+        "containerStatuses": [
+          {
+            "name": "main",
+            "state": {
+              "running": {
+                "startedAt": "2018-11-28T22:56:10Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "docker-registry-49-236:443/cms-xport:latest",
+            "imageID": "docker-pullable://docker-registry-49-236:443/cms-xport@sha256:94f12bca5a75fe76d43241e7da21e6b13e30c3b34a1ef26b2c99fd19c4f7a147",
+            "containerID": "docker://369318f930c71351b920351cd8fc8c61025ada1e7ac32811d335b337282cd718"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    }
+  ]
+}

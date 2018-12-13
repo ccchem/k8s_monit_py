@@ -1,0 +1,27 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: cms-monit
+  namespace: default
+  labels:
+    app: cms-monit
+spec:
+  containers:
+  - name: main
+    image: 192.168.1.10:5000/cms-monit
+    command:
+    - "/usr/local/bin/uwsgi"
+    - "--http"
+    - "0.0.0.0:5000"
+    - "--chdir"
+    - "/opt/cms-monit"
+    - "--module"
+    - "web:app"
+    - "--master"
+    - "--processes"
+    - "2"
+    - "--threads"
+    - "2"
+    ports:
+    - containerPort: 5000
+

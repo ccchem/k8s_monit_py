@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Pods & Containers</title>
+
+<link href="{{url_for('static', filename='light.css')}}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+</head>
+
+<body>
+<h1>CMS Pods {% if withContainers %}& Containers{% endif %}</h1>
+
+<table>
+<tr>
+  <th></th>
+  <th>Name</th>
+  <th>Status</th>
+  <th>Timestamp</th>
+  <th>Restarts</th>
+  <th>IP</th>
+  <th>Node</th>
+</tr>
+
+{% import 'macros.html' as macros -%}
+
+{% for pod in pods -%}
+  {{ macros.pod(pod, withContainers) }}
+{% endfor -%}
+
+</table>
+
+</body>
+
+</html>
+
